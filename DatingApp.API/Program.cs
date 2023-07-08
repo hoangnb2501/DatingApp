@@ -1,5 +1,6 @@
 using System.Text;
 using DatingApp.API.Extensions;
+using DatingApp.API.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,6 +17,8 @@ var app = builder.Build();
 
 {
     // Configure the HTTP request pipeline.
+    app.UseMiddleware<ExceptionMiddleware>();
+
     app.UseCors(builder =>
         builder.AllowAnyHeader()
             .AllowAnyMethod()
