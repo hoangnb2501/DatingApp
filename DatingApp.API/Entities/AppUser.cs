@@ -11,7 +11,7 @@ namespace DatingApp.API.Entities
         private byte[] passwordHash;
         private byte[] passwordSalt;
         private DateOnly dateOfBirth;
-        private string knowAs;
+        private string knownAs;
         private DateTime createdAt = DateTime.UtcNow;
         private DateTime lastActiveAt = DateTime.UtcNow;
         private string gender;
@@ -28,7 +28,7 @@ namespace DatingApp.API.Entities
         public byte[] PasswordSalt { get => passwordSalt; set => passwordSalt = value; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly DateOfBirth { get => dateOfBirth; set => dateOfBirth = value; }
-        public string KnowAs { get => knowAs; set => knowAs = value; }
+        public string KnownAs { get => knownAs; set => knownAs = value; }
         public DateTime CreatedAt { get => createdAt; set => createdAt = value; }
         public DateTime LastActiveAt { get => lastActiveAt; set => lastActiveAt = value; }
         public string Gender { get => gender; set => gender = value; }

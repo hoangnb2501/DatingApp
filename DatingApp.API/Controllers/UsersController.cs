@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.API.Controllers
 {
-
     // /api/users/
     [Authorize]
     public class UsersController : BaseApiController
@@ -23,7 +22,7 @@ namespace DatingApp.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _userRepository.GetUsersAsync();
+            var users = await _userRepository.GetMembersAsync();
             if (users is not null)
                 return Ok(users);
 

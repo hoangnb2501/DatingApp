@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json.Serialization;
 using DatingApp.API.Data;
 using DatingApp.API.Extensions;
 using DatingApp.API.Helpers;
@@ -15,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
                     .AddJsonOptions(options =>
                     {
                         options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                     });
     builder.Services.AddApplicationServices(builder.Configuration);
     builder.Services.AddIdentityServices(builder.Configuration);
