@@ -27,7 +27,7 @@ namespace DatingApp.API.Services.JWT
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddMinutes(5),
                 SigningCredentials = creds
             };
 
