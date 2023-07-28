@@ -1,12 +1,9 @@
-using System.Text;
 using System.Text.Json.Serialization;
 using DatingApp.API.Data;
 using DatingApp.API.Extensions;
 using DatingApp.API.Helpers;
 using DatingApp.API.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 

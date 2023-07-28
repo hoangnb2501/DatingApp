@@ -4,20 +4,22 @@ using DatingApp.API.Data;
 using DatingApp.API.DTOs.Account;
 using DatingApp.API.DTOs.AppUser;
 using DatingApp.API.Entities;
+using DatingApp.API.Interfaces;
 using DatingApp.API.Interfaces.JWT;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Controllers
 {
     public class AccountController : BaseApiController
     {
         private readonly DatingAppDbContext _context;
+        private readonly IUserRepository _userRepository;
         private readonly ITokenService _tokenService;
-        public AccountController(DatingAppDbContext context, ITokenService tokenService)
+        public AccountController(DatingAppDbContext context, ITokenService tokenService, IUserRepository userRepository)
         {
             _tokenService = tokenService;
             _context = context;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")] // POST: api/account/register
@@ -48,8 +50,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")] // POST: api/login
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
-            AppUser user = await _context.Users.SingleOrDefaultAsync(x =>
-                x.Username == loginDto.Username.ToLower());
+            AppUser user = await _userRepository.GetUserByUsernameAsync(loginDto.Username.ToLower().Trim());
 
             if (user == null)
                 return Unauthorized("Username or Password is incorrect.");
@@ -68,13 +69,14 @@ namespace DatingApp.API.Controllers
             return new UserDto
             {
                 Username = user.Username,
-                Token = _tokenService.CreateToken(user)
+                Token = _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain).Url
             };
         }
 
         private async Task<bool> IsUserExisted(string username)
         {
-            return await _context.Users.AnyAsync(x => x.Username == username.ToLower());
+            return await _userRepository.GetUserByUsernameAsync(username.ToLower().Trim()) != null;
         }
     }
 }

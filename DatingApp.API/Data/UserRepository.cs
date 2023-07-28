@@ -18,6 +18,11 @@ namespace DatingApp.API.Data
             _mapper = mapper;
         }
 
+        public void AddUser(AppUser user)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<MemberDto> GetMemberByUsernameAsync(string username)
         {
             return await _context.Users
